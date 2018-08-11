@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+        </title>
+        <link rel="stylesheet" type="text/css" href="../static/sty.css">
+        
+    </head>
+    <body onload="fetchEntries()">
+        <div class="topnav">
+            <img src="../static/myDiary.png" alt="logo" />
+            <a href="login.html" onclick="logout()">LOGOUT</a>
+            <a href="" onclick="fetchAccount()">ACCOUNT</a>
+            <a href="myHome.html">NEW ENTRY</a>
+        </div>
+        <div class="form">
+        
+            <table style="width:100%">
+                <tr>
+                    <th id = "total"></th>
+                    
+                </tr>
+            </table>
+        </div>
+        <div class="tableform" id="tableform">
+            
+        </div>
+        <div id="myModal" class="modal">
+                <div class="modal-content">
+                  <span class="close">&times;</span>
+                  <p class="modalText" id ="single"></p>
+                  <div id="editor"></div>
+                </div>
+        </div>
+        
+        <script src="../static/index.js"></script>
+    </body>
+</html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 <title>My-Diary</title>
@@ -6,26 +6,28 @@
   
   
 </div>
-    <link rel="stylesheet" type="text/css" href="sty.css">
+    <link rel="stylesheet" type="text/css" href="/static/sty.css">
     </head>
-    <body>
-        <div class="topnav">
-   <img src="myDiary.png" alt="logo" />        
-  <a href="register.html">REGISTER</a>
-  <a href="login.html">LOGIN</a>
+    <body onload="fetchIndex()">
+    <div class="topnav">
+   <img src="/static/myDiary.png" alt="logo" />        
+  <a href="/templates/register.html">REGISTER</a>
+  <a href="/templates/login.html">LOGIN</a>
   
 </div>
-        <div class = "welcome">
-        <h1><font color="white">
-                 Welcome to My Diary
+<div class = "welcome">
+        <h1>
+            <font color="white">
+            <div id="output"></div>
             </font>
-            </h1>
-            <form action="register.html"><button>Register</button></form><br>
-            <form action="login.html"><button>Login</button></form>
-        </div>
+        </h1>
+            <form action="/static/register.html"><button>Register</button></form><br>
+            <form action="/static/login.html"><button>Login</button></form>
+</div>
       
         <div class="footer">
   <p>© kk koech</p>
 </div>
+        <script src="/static/index.js"></script>
     </body>
 </html>

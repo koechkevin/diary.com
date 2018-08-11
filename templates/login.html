@@ -1,22 +1,19 @@
-﻿<!DOCTYPE html>
+﻿
 <html>
 <head>
 <title>Home Login
 </title>
 
-<link rel="stylesheet" type="text/css" href="sty.css">
-    <script src="java.js"></script> 
+<link rel="stylesheet" type="text/css" href="../static/sty.css">
+     
 </head>
 <body>
     <div class="topnav">
-  <img src="myDiary.png" alt="logo" />       
+  <img src="../static/myDiary.png" alt="logo" />       
   <a href="register.html">REGISTER</a>
-        <a href="login.html">LOGIN</a>
-<a href="myHome.html">Make an Entry</a>
-</div>
-
+        <a href="login.html">LOGIN</a></div>
     <div class="form">
-<form name="login" method="POST" action ="myHome.html" id="regform" onsubmit="return validateLogin()">
+<form name="login" method="POST"  id="regform" onsubmit="fetchLogin()">
     
 <h2>Login</h2>
 <input type="text" name="username" placeholder="username"><br><br>
@@ -30,6 +27,6 @@
     <div class="footer">
   <p>© kk koech</p>
 </div>
-    
+<script src="../static/index.js"></script>
 </body>
 </html>
