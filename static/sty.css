@@ -194,3 +194,9 @@ table{
 .modal-modify{
     display: none;
 }
+#regstatus{
+    color:red;
+}
+#success{
+    color:rgb(5, 221, 77);
+}

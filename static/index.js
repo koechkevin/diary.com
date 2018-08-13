@@ -1,5 +1,7 @@
+let route = "https://kibitok.herokuapp.com/api/v2";
+
 function fetchIndex(){
-fetch("https://kibitok.herokuapp.com/api/v2/", {method:"GET", 
+fetch(route+"/", {method:"GET", 
 headers:{"Content-Type":"application/json"}})
 .then((response) => response.json())
 .then((data)=>{
@@ -10,7 +12,7 @@ headers:{"Content-Type":"application/json"}})
 token = document.cookie.split(';')[0];
 function fetchRegister(){
     event.preventDefault()
-    let url = "https://kibitok.herokuapp.com/api/v2/users/register"
+    let url = route+"/users/register"
     let firstname = document.forms["register"]["fname"].value;
     let lastname = document.forms["register"]["lname"].value;
     let name = document.forms["register"]["username"].value;
@@ -43,8 +45,12 @@ body:JSON.stringify(data)
         if (data["message"] == "You registered succesfully"){
             window.location.replace("login.html") 
         }
-        else {
-            window.location.replace("register.html")
+        else if (data["message"] == "A conflict happened while processing the request.  The resource might have been modified while the request was being processed."){
+            document.getElementById("regstatus").innerText = "Username already taken or Email exists. Try again!!";
+            console.log(data["message"])
+        }
+        else{
+            document.getElementById("regstatus").innerText = data["message"];
             console.log(data["message"])
         }
     })
@@ -54,7 +60,7 @@ body:JSON.stringify(data)
     
 function fetchAccount(){
     event.preventDefault()
-    const url = "https://kibitok.herokuapp.com/api/v2/users/register"
+    const url = route+"/users/register";
     fetch(url, {method:"GET",
 headers: {"Content-Type":"application/json", 'x-access-token':token}})
 .then((resp)=>resp.json())
@@ -67,7 +73,7 @@ window.location.replace('login.html');
 .catch(error => console.log('error:',error));
 }
 function onload(){
-    const url = "https://kibitok.herokuapp.com/api/v2/users/register"
+    const url = route+"/users/register"
     fetch(url, {method:"GET",
 headers: {"Content-Type":"application/json", 'x-access-token':token}})
 .then((resp)=>resp.json())
@@ -95,7 +101,7 @@ function fetchLogin(){
     }
     else {
     
-    let url = "https://kibitok.herokuapp.com/api/v2/users/login"
+    let url = route+"/users/login"
     
     let data = {username:user, password:pass};
     fetch(url, {method:"POST", 
@@ -113,6 +119,7 @@ body:JSON.stringify(data)
             window.location.replace("myHome.html");
         }
         else {
+            document.getElementById("regstatus").innerText = data["message"];
             console.log(data["message"]);
         }
     })
@@ -122,7 +129,7 @@ body:JSON.stringify(data)
 
 function fetchNewEntry(){
     event.preventDefault()
-    let url = "https://kibitok.herokuapp.com/api/v2/entries"
+    let url = route+"/entries";
     let titl = document.forms["create"]["title"].value;
     let entr = document.forms["create"]["entry"].value;
     let data = {title:titl, entry:entr}
@@ -132,10 +139,15 @@ function fetchNewEntry(){
 }).then((response) => response.json())
 .then((output)=>{
     if (output["message"] == "entry was successfully saved"){
-        window.location.replace("myHome.html");
+        document.getElementById("success").innerText = output["message"];
+        document.getElementById("entryForm").innerHTML = `<textarea maxlength="20" rows ="1" cols = "33" name ="title" placeholder="Title" ></textarea><br>
+        <textarea rows ="10" cols = "33" name ="entry" placeholder="Type an entry" ></textarea><br><br>
+        <button name="save" >Save </button><br>`;
     }
     else{
-        console.log(output["message"]);
+        document.getElementById("regstatus").innerText = output["message"];
+        document.getElementById("success").innerText = "";
+        console.log(output["message"])
     }
 })
 .catch((err)=>console.log(err))
@@ -146,7 +158,7 @@ function fetchEntries(){
         window.location.replace('login.html')
     }
     else{
-    let url = "https://kibitok.herokuapp.com/api/v2/entries";
+    let url = route+"/entries";
     fetch(url, {method:"GET", 
     headers: {"Content-Type":"application/json", 'x-access-token':token}
     
@@ -185,14 +197,14 @@ function fetchEntries(){
         document.getElementById("total").innerHTML = "Total entries : " +Object.keys(data["message"]).length.toString();
     }
     })
-    .catch((error) => console.log(error))
+    .catch((error) => console.error(error))
 
 }
        
 }
 
 function viewSingle(id){
-    let url = "https://kibitok.herokuapp.com/api/v2/entries/"+id;
+    let url = route+"/entries/"+id;
     fetch(url, {
         method : "GET", headers : {"Content-Type":"application/json", 'x-access-token':token}
     }).then((response)=>response.json())
@@ -211,14 +223,14 @@ modal.style.display="block";
 document.getElementById("single").innerHTML = entry;
 document.getElementById("editor").innerHTML = `
 <form name="modify" onsubmit="modifyEntry()"><p id="id"></p><br>
-<textarea rows ="1" cols = "33" name ="title">${title}</textarea><br>
+<textarea maxlength="20" rows ="1" cols = "33" name ="title">${title}</textarea><br>
 <textarea rows ="10" cols = "33" name ="entry">${entry}</textarea><br><br>
 <button name="save" >Edit </button><br></form>`;
 }
 
 function modifyEntry(){
     event.preventDefault();
-    let url = "https://kibitok.herokuapp.com/api/v2/entries/"+editId;
+    let url = route+"/entries/"+editId;
    let titl = document.forms["modify"]["title"].value;
    let entr = document.forms["modify"]["entry"].value;
    let data = {title:titl, entry:entr}
@@ -236,7 +248,7 @@ function modifyEntry(){
 }
 
 function deletes(id){
-    let url = "https://kibitok.herokuapp.com/api/v2/entries/"+id;
+    let url = route+"/entries/"+id;
     if(window.confirm("Are you sure you want to delete?")){
     fetch(url, {
         method:"DELETE",
@@ -254,7 +266,7 @@ function deletes(id){
     }
 function logout(){
     event.preventDefault()
-    let url = "https://kibitok.herokuapp.com/api/v2/users/logout";
+    let url = route+"/users/logout";
     fetch(url, {
         method:"GET",
         headers: {"Content-Type":"application/json", 'x-access-token':token}
