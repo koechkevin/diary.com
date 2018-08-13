@@ -116,7 +116,7 @@ body:JSON.stringify(data)
             let date = new Date();
             date.setTime(date.getTime()+(1000*60*60*30));
             document.cookie = data["token"]+"; expires="+date.toGMTString();
-            window.location.replace("myHome.html");
+            window.location.replace("entries.html");
         }
         else {
             document.getElementById("regstatus").innerText = data["message"];
@@ -143,6 +143,7 @@ function fetchNewEntry(){
         document.getElementById("entryForm").innerHTML = `<textarea maxlength="20" rows ="1" cols = "33" name ="title" placeholder="Title" ></textarea><br>
         <textarea rows ="10" cols = "33" name ="entry" placeholder="Type an entry" ></textarea><br><br>
         <button name="save" >Save </button><br>`;
+        document.getElementById("regstatus").innerText = "";
     }
     else{
         document.getElementById("regstatus").innerText = output["message"];
