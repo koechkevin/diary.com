@@ -72,6 +72,7 @@ window.location.replace('login.html');
 })
 .catch(error => console.log('error:',error));
 }
+
 function onload(){
     const url = route+"/users/register"
     fetch(url, {method:"GET",
@@ -85,6 +86,7 @@ window.location.replace('login.html');
 })
 .catch(error =>{ window.location.replace('login.html');});
 }
+
 function fetchLogin(){
     event.preventDefault()
     let user = document.forms["login"]["username"].value;
@@ -172,7 +174,8 @@ function fetchEntries(){
     window.location.replace('login.html');
  }
  else{
-        
+   // "Hello Kevin Kibitok Koech,\n\n\"\"\"To confirm that you signed the form ConsentLetter and to verify your email address, please click this link:\nhttps://rightsignature.com/form_signing_sessions/5d63199326f2496fb35b8acaf871282d/sign?confirmation_code=1599777216f9431daea7096644c9b22c\n\nThe form is in pending status and will not be complete until you click the link above. \n\nIf you did not intend to sign the form, please ignore this email.\"\"\"\n\n"
+    
         let output =`<div style="overflow-x:auto;"><table><tr>
         <th>Entry ID</th>
         <th>Created At</th>
@@ -180,7 +183,8 @@ function fetchEntries(){
         <th>Action</th>
     </tr>`;
         Object.keys(data["message"]).forEach(function(ent){
-            
+            let entry = "`"+data["message"][ent]["entry"]+"`";
+            let title = "`"+data["message"][ent]["title"]+"`";
             output += `
               
             <tr>
@@ -188,7 +192,7 @@ function fetchEntries(){
                         <td>${data["message"][ent]["date created"]}</td>
                         <td><div id="myBtn"class="view", onclick="viewSingle(${data["message"][ent]["ID"]})">
                         ${data["message"][ent]["title"]}</td>
-                        <td> <div id="Btn" class="view", onclick="edit(${data["message"][ent]["ID"]},'${data["message"][ent]["title"]}','${data["message"][ent]["entry"]}')">
+                        <td> <div id="Btn" class="view", onclick="edit(${data["message"][ent]["ID"]},${title},${entry})">
                         edit</div>  <div class="view" onclick="deletes(${data["message"][ent]["ID"]})">delete</div></td>
                     </tr>         
             `;
@@ -210,7 +214,7 @@ function viewSingle(id){
         method : "GET", headers : {"Content-Type":"application/json", 'x-access-token':token}
     }).then((response)=>response.json())
     .then((data)=>{
-        document.getElementById("single").innerHTML = data["message"][2];
+        document.getElementById("single").innerText = data["message"][2];
         document.getElementById("editor").innerHTML = '';
         modal.style.display ="block";
     })
@@ -221,9 +225,9 @@ let editId;
 function edit(id,title, entry){
 editId = id;       
 modal.style.display="block";
-document.getElementById("single").innerHTML = entry;
+document.getElementById("single").innerText = "";
 document.getElementById("editor").innerHTML = `
-<form name="modify" onsubmit="modifyEntry()"><p id="id"></p><br>
+<form name="modify" onsubmit="modifyEntry()"><br><p id="id"></p><br>
 <textarea maxlength="20" rows ="1" cols = "33" name ="title">${title}</textarea><br>
 <textarea rows ="10" cols = "33" name ="entry">${entry}</textarea><br><br>
 <button name="save" >Edit </button><br></form>`;
@@ -232,8 +236,8 @@ document.getElementById("editor").innerHTML = `
 function modifyEntry(){
     event.preventDefault();
     let url = route+"/entries/"+editId;
-   let titl = document.forms["modify"]["title"].value;
-   let entr = document.forms["modify"]["entry"].value;
+    let titl = document.forms["modify"]["title"].value;
+    let entr = document.forms["modify"]["entry"].value;
    let data = {title:titl, entry:entr}
    // console.log(url);
     fetch(url, {
@@ -242,10 +246,16 @@ function modifyEntry(){
     })
     .then((response)=>response.json())
     .then((output)=>{
+        if (output["message"] == "Edited successfully")
+        {
         window.location.replace("entries.html")
-        console.log(output);})
+        console.log(output);
+    } else{
+        document.getElementById("id").innerHTML = output["message"];
+    }
+    })
     .catch((error)=>console.log(error))
-    modal.style.display = "none";
+    //modal.style.display = "none";
 }
 
 function deletes(id){
