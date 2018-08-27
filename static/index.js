@@ -11,7 +11,7 @@ headers:{"Content-Type":"application/json"}})
 }
 token = document.cookie.split(';')[0];
 function fetchRegister(){
-    event.preventDefault()
+    event.preventDefault();
     let url = route+"/users/register"
     let firstname = document.forms["register"]["fname"].value;
     let lastname = document.forms["register"]["lname"].value;
@@ -34,7 +34,7 @@ function fetchRegister(){
         return false; 
     }
     let data = {fname:firstname, lname:lastname, username:name, email:emailaddress,password:pasword, cpassword:confirmpassword};                    
-    fetch(url, {method:"POST", 
+    fetch(url, {method:"POST",
     headers:{
         "Content-Type":"application/json"
 }, 
@@ -146,6 +146,7 @@ function fetchNewEntry(){
         <textarea rows ="10" cols = "33" name ="entry" placeholder="Type an entry" ></textarea><br><br>
         <button name="save" >Save </button><br>`;
         document.getElementById("regstatus").innerText = "";
+        window.location.replace('entries.html');
     }
     else{
         document.getElementById("regstatus").innerText = output["message"];
