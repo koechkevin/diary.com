@@ -1,4 +1,5 @@
 let route = "https://kibitok.herokuapp.com/api/v2";
+
 document.getElementById("submit").addEventListener("click",
 function fetchRegister(event){
     event.preventDefault();
@@ -24,11 +25,9 @@ function fetchRegister(event){
         return false; 
     }
     let data = {fname:firstname, lname:lastname, username:name, email:emailaddress,password:pasword, cpassword:confirmpassword};                    
-    fetch(url, {method:"POST",
-    headers:{
-        "Content-Type":"application/json"
-}, 
-body:JSON.stringify(data)
+    fetch(url, {
+        method:"POST",headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(data)
     })
     .then((res)=>res.json())
     .then((data) => {
@@ -46,8 +45,9 @@ body:JSON.stringify(data)
     })
     .catch(error => console.log('error:',error));
     return false;
-        });
+});
+
 document.getElementById("logo").addEventListener("click",
 function home(){
-    window.location.replace("../index.html")
+    window.location.replace("../index.html");
 });
