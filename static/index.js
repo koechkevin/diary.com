@@ -1,4 +1,4 @@
-let route = "https://kibitok.herokuapp.com/api/v2";
+let route = "http://127.0.0.1:5013/api/v2";
 
 function fetchIndex(){
 fetch(route+"/", {method:"GET", 
@@ -10,55 +10,9 @@ headers:{"Content-Type":"application/json"}})
 .catch((err) => console.log(err))
 }
 token = document.cookie.split(';')[0];
-function fetchRegister(){
-    event.preventDefault();
-    let url = route+"/users/register"
-    let firstname = document.forms["register"]["fname"].value;
-    let lastname = document.forms["register"]["lname"].value;
-    let name = document.forms["register"]["username"].value;
-    let emailaddress = document.forms["register"]["email"].value;
-    let pasword = document.forms["register"]["password"].value;
-    let confirmpassword = document.forms["register"]["cpassword"].value;
-    var atIndex=emailaddress.indexOf("@");
-    var dotIndex=emailaddress.lastIndexOf(".");
-    if (firstname == ""||lastname == ""||name == ""||pasword.length < 8||confirmpassword == "") {
-        alert("All fields must be filled out and password should be 8 characters long");
-        return false;
-    }
-    else if (atIndex<1 || dotIndex-atIndex < 2) {
-        alert("invalid email");
-        return false;
-    }
-    else if(pasword != confirmpassword){
-        alert("password and confirm password should be equal");
-        return false; 
-    }
-    let data = {fname:firstname, lname:lastname, username:name, email:emailaddress,password:pasword, cpassword:confirmpassword};                    
-    fetch(url, {method:"POST",
-    headers:{
-        "Content-Type":"application/json"
-}, 
-body:JSON.stringify(data)
-    })
-    .then((res)=>res.json())
-    .then((data) => {
-        if (data["message"] == "You registered succesfully"){
-            window.location.replace("login.html") 
-        }
-        else if (data["message"] == "A conflict happened while processing the request.  The resource might have been modified while the request was being processed."){
-            document.getElementById("regstatus").innerText = "Username already taken or Email exists. Try again!!";
-            console.log(data["message"])
-        }
-        else{
-            document.getElementById("regstatus").innerText = data["message"];
-            console.log(data["message"])
-        }
-    })
-    .catch(error => console.log('error:',error));
-    
-        }
-    
-function fetchAccount(){
+
+document.getElementById("account").addEventListener("click",
+function fetchAccount(event){
     event.preventDefault()
     const url = route+"/users/register";
     fetch(url, {method:"GET",
@@ -71,91 +25,7 @@ window.location.replace('login.html');
 } else{console.log(data);}
 })
 .catch(error => console.log('error:',error));
-}
-
-function onload(){
-    const url = route+"/users/register"
-    fetch(url, {method:"GET",
-headers: {"Content-Type":"application/json", 'x-access-token':token}})
-.then((resp)=>resp.json())
-.then((data) =>{
-    if (data["message"] == "you are out of session" || data["message"] == "your token expired please login again"
-|| data["message"] == "invalid token please login to get a new token") {
-window.location.replace('login.html');
-} else{console.log("Welcome "+data["name"]);}
-})
-.catch(error =>{ window.location.replace('login.html');});
-}
-
-function fetchLogin(){
-    event.preventDefault()
-    let user = document.forms["login"]["username"].value;
-    let pass = document.forms["login"]["password"].value;
-    if (user == "") {
-        alert("username cannot be empty");
-        document.login.username.focus() ;
-        return false
-    }
-    else if (pass == "") {
-        alert("password cannot be empty");
-        document.login.password.focus() ;
-        return false
-    }
-    else {
-    
-    let url = route+"/users/login"
-    
-    let data = {username:user, password:pass};
-    fetch(url, {method:"POST", 
-    headers:{
-        "Content-Type":"application/json"
-}, 
-body:JSON.stringify(data)
-    })
-    .then((res)=>res.json())
-    .then((data) => {
-        if (data["token"]){
-            let date = new Date();
-            date.setTime(date.getTime()+(1000*60*60*30));
-            document.cookie = data["token"]+"; expires="+date.toGMTString();
-            window.location.replace("entries.html");
-        }
-        else {
-            document.getElementById("regstatus").innerText = data["message"];
-            console.log(data["message"]);
-        }
-    })
-    .catch(error => console.log('error:',error));
-}
-}
-
-function fetchNewEntry(){
-    event.preventDefault()
-    let url = route+"/entries";
-    let titl = document.forms["create"]["title"].value;
-    let entr = document.forms["create"]["entry"].value;
-    let data = {title:titl, entry:entr}
-    fetch(url, {method:"POST",
-    headers: {"Content-Type":"application/json", 'x-access-token':token},
-    body:JSON.stringify(data)
-}).then((response) => response.json())
-.then((output)=>{
-    if (output["message"] == "entry was successfully saved"){
-        document.getElementById("success").innerText = output["message"];
-        document.getElementById("entryForm").innerHTML = `<textarea maxlength="20" rows ="1" cols = "33" name ="title" placeholder="Title" ></textarea><br>
-        <textarea rows ="10" cols = "33" name ="entry" placeholder="Type an entry" ></textarea><br><br>
-        <button name="save" >Save </button><br>`;
-        document.getElementById("regstatus").innerText = "";
-        window.location.replace('entries.html');
-    }
-    else{
-        document.getElementById("regstatus").innerText = output["message"];
-        document.getElementById("success").innerText = "";
-        console.log(output["message"])
-    }
-})
-.catch((err)=>console.log(err))
-}
+});
 
 function fetchEntries(){
     if (!token){
@@ -175,7 +45,6 @@ function fetchEntries(){
     window.location.replace('login.html');
  }
  else{
-   // "Hello Kevin Kibitok Koech,\n\n\"\"\"To confirm that you signed the form ConsentLetter and to verify your email address, please click this link:\nhttps://rightsignature.com/form_signing_sessions/5d63199326f2496fb35b8acaf871282d/sign?confirmation_code=1599777216f9431daea7096644c9b22c\n\nThe form is in pending status and will not be complete until you click the link above. \n\nIf you did not intend to sign the form, please ignore this email.\"\"\"\n\n"
     
         let output =`<div style="overflow-x:auto;"><table><tr>
         <th>Entry ID</th>
@@ -228,19 +97,17 @@ editId = id;
 modal.style.display="block";
 document.getElementById("single").innerText = "";
 document.getElementById("editor").innerHTML = `
-<form name="modify" onsubmit="modifyEntry()"><br><p id="id"></p><br>
+<form name="modify"><br><p id="id"></p><br>
 <textarea maxlength="20" rows ="1" cols = "33" name ="title">${title}</textarea><br>
 <textarea rows ="10" cols = "33" name ="entry">${entry}</textarea><br><br>
-<button name="save" >Edit </button><br></form>`;
-}
-
-function modifyEntry(){
+<button class="view" name="save" id = "submit">Edit </button><br></form>`;
+document.getElementById("submit").addEventListener("click",
+function modifyEntry(event){
     event.preventDefault();
     let url = route+"/entries/"+editId;
     let titl = document.forms["modify"]["title"].value;
     let entr = document.forms["modify"]["entry"].value;
    let data = {title:titl, entry:entr}
-   // console.log(url);
     fetch(url, {
         method:"PUT", headers: {"Content-Type":"application/json", 'x-access-token':token},
         body:JSON.stringify(data)
@@ -256,7 +123,8 @@ function modifyEntry(){
     }
     })
     .catch((error)=>console.log(error))
-    //modal.style.display = "none";
+}
+);
 }
 
 function deletes(id){
@@ -276,7 +144,8 @@ function deletes(id){
         window.location.replace("entries.html");
     }
     }
-function logout(){
+document.getElementById("logout").addEventListener("click",    
+function logout(event){
     event.preventDefault()
     let url = route+"/users/logout";
     fetch(url, {
@@ -292,7 +161,7 @@ function logout(){
        window.location.replace("login.html");
    })
    .catch((error)=>console.error(error))
-}
+});
 let modal = document.getElementById('myModal');
 let btn = document.getElementById("myBtn");
 let span = document.getElementsByClassName("close")[0];
@@ -305,3 +174,7 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
+document.getElementById("logo").addEventListener("click",
+function home(){
+    window.location.replace("../index.html")
+});
