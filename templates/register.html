@@ -17,13 +17,13 @@
 <div class="form">
 <h2>Register</h2>
 <p id="regstatus"></p>
-<form name="register" method="POST" id="regform">
-<input type="text" name="fname" placeholder="Enter your first name"><br><br>
-<input type="text" name="lname" placeholder="Enter your last name"><br><br>
-<input type="text" name="email" placeholder="Email Address"><br><br>
-<input type="text" name="username" placeholder="Username"><br><br>
-<input type="password" name="password" placeholder="Enter password"><br><br>
-<input type="password" name="cpassword" placeholder="confirm password"><br><br>
+<form name="register" id="regform">
+<input type="text"  name="fname" placeholder="Enter your first name" pattern="\s*(\S\s*){1,}" title="First name cannot be empty" required><br><br>
+<input type="text" name="lname" placeholder="Enter your last name" pattern="\s*(\S\s*){1,}" title="last name cannot be empty" required><br><br>
+<input type="text"  name="email" placeholder="Email Address" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" title="enter a valid email" required><br><br>
+<input type="text"  name="username" placeholder="Username" pattern="\s*(\S\s*){1,}" title="username cannot be empty" required><br><br>
+<input type="password"  name="password" placeholder="Enter password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="password should be at least 8 characters long with atleast one number, one special char, one uppercase and lowercase letters" required><br><br>
+<input type="password"  name="cpassword" placeholder="confirm password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="password should be at least 8 characters long with atleast one number, one special char, one uppercase and lowercase letters" required><br><br>
 <button class="view" id="submit">Submit </button><br><a href="login.html" id="submit">Login Here</a>
     
 </form>

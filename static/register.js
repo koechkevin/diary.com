@@ -13,7 +13,7 @@ function fetchRegister(event){
     var atIndex=emailaddress.indexOf("@");
     var dotIndex=emailaddress.lastIndexOf(".");
     if (firstname == ""||lastname == ""||name == ""||pasword.length < 8||confirmpassword == "") {
-        alert("All fields must be filled out and password should be 8 characters long");
+        alert("please fill all the fields and ensure password is atleast 8 characters long");
         return false;
     }
     else if (atIndex<1 || dotIndex-atIndex < 2) {
