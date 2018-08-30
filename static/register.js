@@ -10,8 +10,8 @@ function fetchRegister(event){
     let emailaddress = document.forms["register"]["email"].value;
     let pasword = document.forms["register"]["password"].value;
     let confirmpassword = document.forms["register"]["cpassword"].value;
-    var atIndex=emailaddress.indexOf("@");
-    var dotIndex=emailaddress.lastIndexOf(".");
+    let atIndex=emailaddress.indexOf("@");
+    let dotIndex=emailaddress.lastIndexOf(".");
     if (firstname == ""||lastname == ""||name == ""||pasword.length < 8||confirmpassword == "") {
         alert("please fill all the fields and ensure password is atleast 8 characters long");
         return false;
@@ -36,15 +36,12 @@ function fetchRegister(event){
         }
         else if (data["message"] == "A conflict happened while processing the request.  The resource might have been modified while the request was being processed."){
             document.getElementById("regstatus").innerText = "Username already taken or Email exists. Try again!!";
-            console.log(data["message"])
         }
         else{
             document.getElementById("regstatus").innerText = data["message"];
-            console.log(data["message"])
         }
     })
     .catch(error => console.log('error:',error));
-    return false;
 });
 
 document.getElementById("logo").addEventListener("click",

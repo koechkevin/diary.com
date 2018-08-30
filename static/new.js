@@ -80,3 +80,22 @@ document.getElementById("logo").addEventListener("click",
 function home(){
     window.location.replace("../index.html")
 });
+
+document.getElementById("logout").addEventListener("click",
+function logout(event){
+    event.preventDefault()
+    let url = route+"/users/logout";
+    fetch(url, {
+        method:"GET",
+        headers: {"Content-Type":"application/json", "x-access-token":token}
+    })
+    .then((response)=>response.json())
+    .then((data)=>{
+        let date = new Date();
+        date.setTime(date.getTime()-(1));
+        document.cookie = token+"; expires="+date.toGMTString();
+        console.log(data["message"]);
+        window.location.replace("login.html");
+    })
+   .catch((error)=>console.error(error))
+});

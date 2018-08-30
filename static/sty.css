@@ -17,14 +17,13 @@ border-radius:4px;
 }
 .form{
 font-size:16px;     
-margin-top:5%;
+margin-top:10%;
 opacity:0.8;
 margin-left:5%;
 margin-right:5%;
-margin-top:5%;
+margin-bottom:10%;
 text-align:center;
 background-color:white;
-
 padding: 10px 10px 10px 10px;
 border-radius:10px;
 }
@@ -45,6 +44,9 @@ p{
 }
 
 .topnav {
+    top:0;
+    left: 0;
+    right: 0;
     background-color: #333;
     overflow: hidden;
     opacity: 0.8;
@@ -171,11 +173,11 @@ textarea, .form input[type="datetime-local"] {
 .tableform{
 font-family: sans-serif;
 font-size:16px;     
-margin-top:5%;
-margin-bottom:5%;
+margin-top:10%;
+margin-bottom:10%;
 opacity:0.8;
-margin-left:20%;
-margin-right:20%;
+margin-left:25%;
+margin-right:25%;
 background-color:white;
 padding: 10px 10px 10px 10px;
 border-radius:10px;
@@ -200,4 +202,19 @@ table{
 }
 #success{
     color:rgb(5, 221, 77);
+}
+h3, h5{
+    display: inline;
+}
+.totals{
+    font-size:16px;     
+    margin-top:5%;
+    opacity:0.8;
+    margin-left:5%;
+    margin-right:5%;
+    margin-bottom:-8%;
+    text-align:center;
+    background-color:white;
+    padding: 10px 10px 10px 10px;
+    border-radius:10px;
 }
