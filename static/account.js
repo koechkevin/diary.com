@@ -5,7 +5,6 @@ function fetchAccount(){
     if(!token){
         window.location.replace("login.html");
     }
-    //preventDefault()
     const url = route+"/users/register";
     fetch(url, {
         method:"GET",

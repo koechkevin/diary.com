@@ -1,4 +1,5 @@
 let route = "https://kibitok.herokuapp.com/api/v2";
+
 token = document.cookie.split(';')[0];
 
 function onload(){

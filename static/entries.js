@@ -78,11 +78,7 @@ function viewSingle(id){
     .catch((error) =>console.log(error))
 }
 
-function edit(
-    id,
-    title,
-    entry
-){
+function edit(id,title,entry){
     
     modal.style.display="block";
     document.getElementById("single").innerText = "";
