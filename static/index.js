@@ -11,6 +11,7 @@ function fetchIndex(){
         .catch((err) => console.log(err))
 }
 
+
 document.getElementById("logo").addEventListener("click",
 function home(){
     window.location.reload();
