@@ -34,15 +34,15 @@ function fetchEntries(){
                 </tr>
                 `;
                 Object.keys(data["message"]).forEach(function(ent){
-                    let entry = "`"+data["message"][ent]["entry"]+"`";
-                    let title = "`"+data["message"][ent]["title"]+"`";
+                    let entry = data["message"][ent]["entry"];
+                    let title = data["message"][ent]["title"];
                     output += `
                     <tr>
                     <td>${data["message"][ent]["ID"]}</td>
                     <td>${data["message"][ent]["date created"]}</td>
-                    <td><div id="myBtn"class="view", onclick="viewSingle(${data["message"][ent]["ID"]})">
+                    <td><div id="myBtn"class="view", onclick="viewSingle(${data["message"][ent]["ID"]},\`${title}\`,\`${entry}\`)">
                     ${data["message"][ent]["title"]}</td>
-                    <td> <div id="Btn" class="view", onclick="edit(${data["message"][ent]["ID"]},${title},${entry})">
+                    <td> <div id="Btn" class="view", onclick="edit(${data["message"][ent]["ID"]},\`${title}\`,\`${entry}\`)">
                     <h5>EDIT</h5></div>  <div class="view" onclick="deletes(${data["message"][ent]["ID"]})"><h5>DELETE</h5></div></td>
                     </tr>
                     `;
@@ -63,16 +63,32 @@ function viewSingle(id){
     })
     .then((response)=>response.json())
     .then((data)=>{
+        let entry = data["message"][2];
+        let title = data["message"][1];
+        document.getElementById("entry").innerText = "Entry : ";
+        document.getElementById("title").innerText = "Title : ";
+        document.getElementById("singleTitle").innerText = data["message"][1];
         document.getElementById("single").innerText = data["message"][2];
-        document.getElementById("editor").innerHTML = '';
+        document.getElementById("editor").innerHTML = `
+        <button class="view" name="save" onclick = "edit(${id},\`${title}\`,\`${entry}\`)">
+        Edit </button>    <button class="view" name="save" onclick = "deletes(${id})">
+        Delete </button><br>`;
         modal.style.display ="block";
     })
     .catch((error) =>console.log(error))
 }
 
-function edit(id,title,entry){
+function edit(
+    id,
+    title,
+    entry
+){
+    
     modal.style.display="block";
     document.getElementById("single").innerText = "";
+    document.getElementById("entry").innerText = "";
+    document.getElementById("title").innerText = "";
+    document.getElementById("singleTitle").innerText = "";
     document.getElementById("editor").innerHTML = `
     <form name="modify"><br><p id="id"></p><br>
     <textarea maxlength="20" rows ="1" cols = "33" name ="title">${title}</textarea><br>
@@ -94,7 +110,6 @@ function edit(id,title,entry){
         .then((output)=>{
             if (output["message"] == "Edited successfully"){
                 window.location.replace("entries.html");
-                console.log(output);
             } 
             else{
                 document.getElementById("id").innerHTML = output["message"];
@@ -106,7 +121,7 @@ function edit(id,title,entry){
 
 function deletes(id){
     let url = route+"/entries/"+id;
-    if(window.confirm("Are you sure you want to delete?")){
+    if(window.confirm("Are you sure you want to delete entry "+id+" ?")){
         fetch(url, {
             method:"DELETE",
             headers: {"Content-Type":"application/json", "x-access-token":token}
@@ -135,7 +150,6 @@ function logout(event){
         let date = new Date();
         date.setTime(date.getTime()-(1));
         document.cookie = token+"; expires="+date.toGMTString();
-        console.log(data["message"]);
         window.location.replace("login.html");
     })
    .catch((error)=>console.error(error))

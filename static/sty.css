@@ -150,8 +150,8 @@ textarea, .form input[type="datetime-local"] {
     margin: 10% auto; 
     padding: 20px;
     border: 1px solid #888;
-    height: 60%;
-    width: 80%; 
+    height: auto;
+    width: auto; 
 }
 .close {
     color: #aaa;

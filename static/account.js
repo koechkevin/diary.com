@@ -47,7 +47,6 @@ function logout(event){
         let date = new Date();
         date.setTime(date.getTime()-(1));
         document.cookie = token+"; expires="+date.toGMTString();
-        console.log(data["message"]);
         window.location.replace("login.html");
     })
    .catch((error)=>console.error(error))
