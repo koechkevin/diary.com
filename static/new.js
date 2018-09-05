@@ -1,6 +1,6 @@
 let route = "https://kibitok.herokuapp.com/api/v2";
 
-token = document.cookie.split(';')[0];
+let token = JSON.parse(localStorage.getItem("token"));
 
 function onload(){
     const url = route+"/users/register"
@@ -92,9 +92,7 @@ function logout(event){
     })
     .then((response)=>response.json())
     .then((data)=>{
-        let date = new Date();
-        date.setTime(date.getTime()-(1));
-        document.cookie = token+"; expires="+date.toGMTString();
+        localStorage.clear();
         window.location.replace("login.html");
     })
    .catch((error)=>console.error(error))

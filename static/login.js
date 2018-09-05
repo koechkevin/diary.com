@@ -1,6 +1,6 @@
 let route = "https://kibitok.herokuapp.com/api/v2";
 
-document.getElementById("submit").addEventListener("click",
+document.getElementById("regform").addEventListener("submit",
 function fetchLogin(event){
     event.preventDefault();
     let user = document.forms["login"]["username"].value;
@@ -26,10 +26,8 @@ function fetchLogin(event){
         .then((res)=>res.json())
         .then((data) => {
             if (data["token"]){
-                let date = new Date();
-                date.setTime(date.getTime()+(1000*60*60*30));
-                document.cookie = data["token"]+"; expires="+date.toGMTString();
-                window.location.replace("entries.html");
+                localStorage.setItem("token", JSON.stringify(data["token"]));
+                window.location.assign("entries.html");
             }
             else {
                 document.getElementById("regstatus").innerText = data["message"];

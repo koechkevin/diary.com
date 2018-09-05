@@ -1,4 +1,4 @@
-let route = "http://127.0.0.1:5013/api/v2";
+let route = "https://kibitok.herokuapp.com/api/v2";
 
 document.addEventListener("DOMContentLoaded", ()=>{
     fetch(route+"/", {
