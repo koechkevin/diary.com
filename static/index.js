@@ -1,6 +1,6 @@
 let route = "https://kibitok.herokuapp.com/api/v2";
 
-function fetchIndex(){
+document.addEventListener("DOMContentLoaded", ()=>{
     fetch(route+"/", {
         method:"GET",
         headers:{"Content-Type":"application/json"}})
@@ -9,7 +9,7 @@ function fetchIndex(){
             document.getElementById("output").innerHTML = data["message"];
         })
         .catch((err) => console.log(err))
-}
+}, false);
 
 
 document.getElementById("logo").addEventListener("click",

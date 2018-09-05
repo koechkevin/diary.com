@@ -7,7 +7,7 @@ border: 2px solid azure;
 padding: 10px 10px 10px 10px;
 border-radius:4px;
 }
-button{
+button, input[type="submit"]{
 background-color:antiquewhite;
 border:none;
 font-size:20px;
@@ -86,7 +86,7 @@ body{
 }
 .footer {
     position: fixed;
-    opacity: 0.2;
+    opacity: 0.8;
     left: 0;
     bottom: 0;
     width: 100%;

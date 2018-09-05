@@ -1,6 +1,6 @@
 let route = "https://kibitok.herokuapp.com/api/v2";
 
-let token = document.cookie.split(';')[0];
+let token = JSON.parse(localStorage.getItem("token"));
 let modal = document.getElementById('myModal');
 let btn = document.getElementById("myBtn");
 let span = document.getElementsByClassName("close")[0];
@@ -143,9 +143,7 @@ function logout(event){
     })
     .then((response)=>response.json())
     .then((data)=>{
-        let date = new Date();
-        date.setTime(date.getTime()-(1));
-        document.cookie = token+"; expires="+date.toGMTString();
+        localStorage.clear();
         window.location.replace("login.html");
     })
    .catch((error)=>console.error(error))

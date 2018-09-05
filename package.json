@@ -1,0 +1,33 @@
+{
+  "name": "koechkevin.github.io",
+  "version": "1.0.0",
+  "description": "testfile",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "jest": "^23.5.0",
+    "jest-fetch-mock": "^1.6.5"
+  },
+  "jest": {
+    "automock": true,
+    "setupFiles": [
+      "./config.js"
+    ]
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/koechkevin/koechkevin.github.io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/koechkevin/koechkevin.github.io/issues"
+  },
+  "homepage": "https://github.com/koechkevin/koechkevin.github.io#readme"
+}
