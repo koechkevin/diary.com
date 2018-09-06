@@ -5,7 +5,7 @@ let modal = document.getElementById('myModal');
 let btn = document.getElementById("myBtn");
 let span = document.getElementsByClassName("close")[0];
 
-function fetchEntries(){
+document.addEventListener("DOMContentLoaded", ()=>{
     if (!token){
         window.location.replace('login.html');
     }
@@ -53,7 +53,7 @@ function fetchEntries(){
         })
         .catch((error) => console.error(error))
     }
-}
+});
 
 function viewSingle(id){
     let url = route+"/entries/"+id;

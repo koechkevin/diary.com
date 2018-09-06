@@ -2,7 +2,7 @@ let route = "https://kibitok.herokuapp.com/api/v2";
 
 let token = JSON.parse(localStorage.getItem("token"));
 
-function onload(){
+document.addEventListener("DOMContentLoaded", ()=>{
     const url = route+"/users/register"
     fetch(url, {
         method:"GET",
@@ -21,7 +21,7 @@ function onload(){
     })
     .catch(error =>{ 
         window.location.replace('login.html');});
-}
+});
 
 function fetchAccount(){
     const url = route+"/users/register";
