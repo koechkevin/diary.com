@@ -1,7 +1,7 @@
 let route = "https://kibitok.herokuapp.com/api/v2";
 let token = JSON.parse(localStorage.getItem("token"));
 
-function fetchAccount(){
+document.addEventListener("DOMContentLoaded", ()=>{
     if(!token){
         window.location.replace("login.html");
     }
@@ -26,7 +26,7 @@ function fetchAccount(){
             }
         })
         .catch(error => console.log('error:',error));
-    }
+    });
 
 document.getElementById("logo").addEventListener("click",
 function home(){
